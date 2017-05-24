@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,38 +21,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Out.In in = new Out().new In();
-        in.test();
+        //删除List集合元素
+        ArrayList<String> originalList = new ArrayList<String>();
+        originalList.add("1");
+        originalList.add("2");
+        originalList.add("2");
+        originalList.add("4");
+        originalList.add("3");
+        originalList.add("7");
+        //错误删除1
+//        List<String> removeList = CollectionExample.wrongRemoveListElement(originalList,"2");
 
-        Out.SIn sin = new Out.SIn();
-        sin.sTest();
+        //错误删除2
+//        List<String> removeList = CollectionExample.wrongRemoveListElement2(originalList,"2");
+        //正确删除
+        List<String> removeList = CollectionExample.rightRemoveListElement(originalList,"2");
+        Log.i("lsw----removeList = ",removeList.toString());
 
-        new Test().getName();
-        Log.i("lsw---",new Test().getNum2()+"");
-        HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("1","zs");
-//        hashMap.put("1","ww");
-        Hashtable<String,String> hashtable = new Hashtable<String,String>();
-//        hashtable.put(null,null);
-        Log.i("lsw---",hashMap.get("1"));
-        HashSet<String> set = new HashSet();
-        String s1 = new String("11");
-        String s2 = new String("11");
-        Log.i("lsw---add1 = ",""+set.add(s1));
-        Log.i("lsw---add2 = ",""+set.add(s2));
-        Log.i("lsw---",set.size()+"");
+        //删除Map集合元素
+        HashMap<Integer,String> map = new HashMap<>();
+        for(int i=0;i<10;i++){
+            map.put(i,"value"+i);
+        }
 
-        List<String> list = new ArrayList<String>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        list.add("2");
-        list.add("4");
-        list.add("5");
-        Log.i("lsw----list = ",list.toString());
-        HashSet<String> listSet = new HashSet(list);
-        Log.i("lsw---set---",listSet.toString());
-        List<String> newList = new ArrayList<>(listSet);
-        Log.i("lsw----list = ",newList.toString());
+//        Map<Integer,String> removeMap = CollectionExample.wrongRemoveMapElement(map);
+        //正确删除Map集合元素
+        Map<Integer,String> removeMap = CollectionExample.rightRemoveMapElement(map);
+        Log.i("lsw----removeMap = ",removeMap.toString());
+
+        //多个线程操作List（错误操作）
+//        ArrayList<String> originalOperateList = new ArrayList<String>();
+        //正确操作，因为CopyOnWriteArrayList是线程安全的
+        CopyOnWriteArrayList<String> originalOperateList = new CopyOnWriteArrayList<String>();
+        originalList.add("1");
+        originalList.add("2");
+        originalList.add("2");
+        originalList.add("4");
+        originalList.add("3");
+        originalList.add("7");
+        List<String> OperateList = CollectionExample.wrongMultiThreadOperateElement(originalOperateList);
+        Log.i("lsw----OperateList = ",OperateList.toString());
     }
 }
