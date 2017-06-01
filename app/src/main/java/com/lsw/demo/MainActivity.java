@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,6 +16,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         //多个线程操作List（错误操作）
 //        ArrayList<String> originalOperateList = new ArrayList<String>();
         //正确操作，因为CopyOnWriteArrayList是线程安全的
-        CopyOnWriteArrayList<String> originalOperateList = new CopyOnWriteArrayList<String>();
+        /*CopyOnWriteArrayList<String> originalOperateList = new CopyOnWriteArrayList<String>();
         originalList.add("1");
         originalList.add("2");
         originalList.add("2");
@@ -60,6 +65,31 @@ public class MainActivity extends AppCompatActivity {
         originalList.add("3");
         originalList.add("7");
         List<String> OperateList = CollectionExample.wrongMultiThreadOperateElement(originalOperateList);
-        Log.i("lsw----OperateList = ",OperateList.toString());
+        Log.i("lsw----OperateList = ",OperateList.toString());*/
+        transientExampleTest();
     }
+
+
+    private void transientExampleTest(){
+        TransientExample logInfo = new TransientExample("MIKE", "MECHANICS");
+        Log.i("lsw-transientExample1 ",logInfo.getExample());
+        try {
+            ObjectOutputStream o = new ObjectOutputStream(
+                    new FileOutputStream("logInfo.out"));
+            o.writeObject(logInfo);
+            o.close();
+        } catch(Exception e) {
+            //deal with exception
+        }
+        //To read the object back, we can write
+        try {
+            ObjectInputStream in =new ObjectInputStream(
+                    new FileInputStream("logInfo.out"));
+            TransientExample logInfoIn = (TransientExample)in.readObject();
+            Log.i("lsw-transientExample2 ",logInfo.getExample());
+        } catch(Exception e) {
+            //deal with exception
+        }
+    }
+
 }
