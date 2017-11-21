@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 
 public class CollectionExample {
 
+    private static final String TAG = "CollectionExample";
 
     /**
      * for循环遍历list
@@ -139,4 +141,54 @@ public class CollectionExample {
         return list;
 
     }
+
+    public static void testHashMap(){
+
+        HashMap map = new HashMap();
+
+        map.put("1", "a");
+        map.put("2", "b");
+        map.put("3", "c");
+        map.put("4", "d");
+
+        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Log.i(TAG, "testHashMap: " + iterator.next());
+        }
+
+    }
+
+    public static void testLinkedHashMap(){
+
+        LinkedHashMap map = new LinkedHashMap();
+
+        map.put("1", "a");
+        map.put("2", "b");
+        map.put("3", "c");
+        map.put("4", "d");
+
+        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Log.i(TAG, "testLinkedHashMap: " + iterator.next());
+        }
+
+        map = new LinkedHashMap<String, String>(10, 0.75f, true);
+        map.put("1", "a");
+        map.put("2", "b");
+        map.put("3", "c");
+        map.put("4", "d");
+        map.get("2");//2移动到了内部的链表末尾
+        map.get("4");//4调整至末尾
+        map.put("3", "e");//3调整至末尾
+        map.put(null, null);//插入两个新的节点 null
+        map.put("5", null);//5
+        iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Log.i(TAG, "testLinkedHashMap2: " + iterator.next());
+        }
+
+
+    }
+
+
 }

@@ -26,6 +26,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        CollectionExample.testHashMap();
+        CollectionExample.testLinkedHashMap();
+
+
+        String s11 = "a";
+        String s12 = "a";
+
+        boolean is = (s11 == s12);
+
+        Log.i("lsw---",is+"");
+
+        String s = new String("Hello");
+        String s1 = s.intern();
+
+        Log.i("lsw---s = ",(s == s1)+"");
+
+        Log.i("lsw---float = ",(0.1*3 == 0.3)+"");
+
         //删除List集合元素
         ArrayList<String> originalList = new ArrayList<String>();
         originalList.add("1");
