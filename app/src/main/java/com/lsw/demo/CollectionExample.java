@@ -1,6 +1,8 @@
 package com.lsw.demo;
 
+import android.util.ArrayMap;
 import android.util.Log;
+import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -190,5 +192,40 @@ public class CollectionExample {
 
     }
 
+
+    public static void testHashMapMemory(){
+        HashMap<Integer, String>map = new HashMap<Integer, String>();
+        long start_map = System.currentTimeMillis();
+        for(int i=1;i<100001;i++){
+            map.put(i, String.valueOf(i));
+        }
+        long map_memory = Runtime.getRuntime().totalMemory();
+        long end_map = System.currentTimeMillis()-start_map;
+        Log.i(TAG, "testHashMap: "+"<---Map的插入时间--->"+end_map+"<---Map占用的内存--->"+map_memory);
+
+    }
+
+    public static void testSparseArrayMemory() {
+        SparseArray<String> sparseArray = new SparseArray<>();
+        long start_sparse = System.currentTimeMillis();
+        for (int i = 1; i < 100001; i++) {
+            sparseArray.put(i, i + "");
+        }
+        long sparse_memory = Runtime.getRuntime().totalMemory();
+        long end_sparse = System.currentTimeMillis() - start_sparse;
+        Log.i(TAG, "testSparseArray: "+"<---Sparse的插入时间--->" + end_sparse + "<---Sparse占用的内存--->" + sparse_memory);
+    }
+
+
+    public static void testArrayMapMemory() {
+        ArrayMap<Integer,String> arrayMap = new ArrayMap<>();
+        long start_array_map = System.currentTimeMillis();
+        for (int i = 1; i < 100001; i++) {
+            arrayMap.put(i, i + "");
+        }
+        long array_map_memory = Runtime.getRuntime().totalMemory();
+        long end_array_map = System.currentTimeMillis() - start_array_map;
+        Log.i(TAG, "testArrayMap: "+"<---ArrayMap的插入时间--->" + end_array_map + "<---ArrayMap占用的内存--->" + array_map_memory);
+    }
 
 }

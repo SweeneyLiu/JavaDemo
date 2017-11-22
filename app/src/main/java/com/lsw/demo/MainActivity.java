@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
         CollectionExample.testHashMap();
         CollectionExample.testLinkedHashMap();
 
+        CollectionExample.testHashMapMemory();
+        CollectionExample.testSparseArrayMemory();
+        CollectionExample.testArrayMapMemory();
+
 
         String s11 = "a";
         String s12 = "a";
